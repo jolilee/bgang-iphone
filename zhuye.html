@@ -1,0 +1,214 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <title >主页</title>
+  
+  <!-- bxSlider CSS file -->
+  <link href="css/jquery.bxslider.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="css/global.css">
+  <link rel="stylesheet" type="text/css" href="css/ui.css">
+  <link rel="stylesheet" type="text/css" href="http://baogang.dpsapi.com/baogang.css">
+  <style type="text/css">
+      .page{
+
+          display: none;
+      }
+
+      /*ajax加载效果*/
+      .loading {position:fixed;top:0;left:0;bottom:0;right:0;z-index:10000;background-color:#000;}
+      .loading_inner {text-align:center;background-color:rgba(0,0,0,0.5);color:#fff;position:fixed;top:50%;left:50%;margin-left:-70px;margin-top:-48px;width:140px;border-radius:6px;font-size:14px;padding:58px 0 10px 0}
+      .loading_icon {position:absolute;top:15px;left:50%;margin-left:-16px;width:24px;height:24px;border:2px solid #fff;border-radius:24px;-webkit-animation:gif 1s infinite linear;animation:gif 1s infinite linear;clip:rect(0 auto 12px 0);}
+      @keyframes gif {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+      @-webkit-keyframes gif {0%{-webkit-transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);}}
+      
+  </style>
+
+  <script src="js/jquery-1.9.0.min.js"></script>
+  <!-- bxSlider Javascript file -->
+  <script src="js/jquery.bxslider.js"></script>
+  <script src="js/mustache.js"></script>
+  <script src="js/base.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            page.init();
+
+            page.switchPage("Home");
+
+            $('#large').click(function(){
+                $('.news-source-title h1').css("font-size","20px");
+                $('.news-source-title h2').css("font-size","20px");
+                $('.news-source-info').css("font-size","20px");
+                $('.news-detail-content').css("font-size","20px");
+                $('#comment_bar').css("font-size","20px");
+                $('#likeNum').css("font-size","20px");
+                $('#commentNum').css("font-size","20px");
+            });
+            $('#zoom').click(function(){
+                $('.news-source-title h1').css("font-size","16px");
+                $('.news-source-title h2').css("font-size","14px");
+                $('.news-source-info').css("font-size","14px");
+                $('.news-detail-content').css("font-size","14px");
+                $('#comment_bar').css("font-size","14px");
+                $('#likeNum').css("font-size","14px");
+                $('#commentNum').css("font-size","14px");
+            });
+        });
+
+
+
+    </script>
+
+
+</head>
+
+<body>
+
+  <div class="loading" id="loading"><div class="loading_inner"><i class="loading_icon"></i>正在加载...</div></div>
+
+  <section class="home-area page">
+    <div class="news-detail-header">
+      <img src="images/baoganglogo.jpg"> <strong>宝钢新闻</strong>
+    </div>
+    <div>
+      <ul id="homeslider" name="homeslider" class="">
+      </ul>
+    </div>
+    
+    <!--div>
+      <p class="home-title">率队慰问湛江钢铁基地建设者</p>
+    </div-->
+
+    <div class="home-body">
+    </div>
+    <script type="text/templete" id="home_classify">
+    <a href="#{{type_name}}" onclick="javascript:page.switchPage('Classify','{{type_name}}');">
+          <div class="item">
+              <img id="ico_img" src="images/{{icoImg}}">
+              <div class="title">
+                  <div style="font-weight:bold;font-family:'黑体';">{{title}}</div>
+                  <div style="color:#979797;font-size:12px;height:32px;line-height:18px">{{body}}{{{haveVideo}}}{{{havePicture}}}</div>
+                  <div style="color:#979797;font-size:10px;text-align:right;padding-right:12px;">{{time}}</div>
+              </div>
+
+          </div>
+        </a>
+        <div class="type">{{className}}</div>
+    </script>
+      <div>
+          <p style="text-align: center;font-size:12px;">
+              宝钢新闻中心：021-26642866    &nbsp;&nbsp;E-mail:bgbs@baosteel.com</br>
+              技术支持：上海软盛信息技术有限公司    021-31261126
+          </p>
+      </div>
+
+  </section>
+
+
+
+  <!--分类页-->
+  <section id="classify" class="news-area page">
+    <div class="news-detail-header" onclick="page.backToHomePage()">
+      <img src="images/baoganglogo.jpg"> <strong>宝钢新闻</strong>
+    </div>
+    <div class="top-tabs">
+      <ul id="ChildClassify">
+      </ul>
+    </div>
+
+
+    <div>
+      <ul id="classifyslider" name="classifyslider" class="">
+      </ul>
+      <p id="classifyTitle" class="home-title"></p>
+    </div>
+
+    <div id="ClassifyContent" class="class-body">
+      
+    </div>
+    <div id="getMore" onclick="page.getMoreClassify()" style="height:36px;line-height:36px;text-align:center;">获取更多</div>
+
+    <footer class="intro-footer" onclick="page.backToHomePage()"></footer>
+
+    <script type="text/templete" id="classify_item">
+        <div class="item">
+            <a href="#{{nid}}" onclick="javascript:page.switchPage('Detail',{{nid}})">
+              <h3 class="f16" style="font-weight:bold;">{{title}}</h3>
+              <p>{{body}} <span id="pic_ioc">{{{haveVideo}}}{{{havePicture}}}</span><br> <span style="display:block; text-align: right; padding-right:1em;">{{time}}</span></p><i></i>
+            </a>
+        </div>
+    </script>
+
+  </section>
+
+  <!--正文页-->
+  <section id="detailpage" class="news-detail-area page">
+
+    <div class="news-detail-header" onclick="page.backToHomePage()">
+        <img src="images/baoganglogo.jpg">
+        <strong>宝钢新闻</strong>
+    </div>
+
+    <div id="detailPanel" class="news-detail-body">
+        <style id="extendCss" type="text/css">
+        </style>
+        <div class="news-source">
+            <div class="news-source-title">
+              <h1 id="title_1"></h1>
+              <h2 id="title_2"></h2>
+              <i onclick="page.backToClassifyPage()">返回</i>
+            </div>
+            <div class="news-source-info"><label style="color:#979797; display: inline-block;margin-left: 8px;padding-right: 18px;text-align: right;width: 100%;" id="news_time"></label></div>
+        </div>
+        <div class="news-detail-content">
+            <div id="img_box">
+                <img id="large" src="images/Aa_1.png" alt="放大" width="20" height="20" />
+                <img id="zoom" src="images/Aa_2.png" alt="缩小" width="20" height="20" />
+            </div>
+            <div class="mb10" id="videoPanel">
+              
+            </div>
+            <div class="mb10" id="imgPanel">
+
+            </div>
+            
+            <div class="explain" id="newDetailPanel">
+                
+            </div>
+        </div>
+    </div>
+      <div id="dialog_box">
+          <ul class="dialog_content">
+
+          </ul>
+      </div>
+    <div id="comment_bar" style="font-size:16px;font-weight: bold;border-top:#A2A2FE 2px solid;margin-top:6px;padding-left:12px;">评论</div>
+    <div id="commentList">
+        
+    </div>
+    <div style="height:42px">&nbsp;</div>
+    <div class="news-detail-bottom" style="position:fixed;bottom:0;left:0;">
+        <input type="text" id="commentBox">
+        <a id="likeNum" href="javascript:page.like()" class="ioc">0</a>
+        <a id="commentNum" href="javascript:page.comment();">评论:0</a>
+    </div>
+    
+    <script type="text/templete" id="comment_item">
+        <div style="border-top:1px solid #CFCFCF;margin-top:6px">
+            <div style="padding-left:12px;">{{post}}</div>
+            <div style="padding-left:12px;">{{body}}</div>
+        </div>
+    </script>
+  </section>
+
+
+
+  <div id="toTop" style="position:fixed;bottom:2px;right:2px;" style="display:none" onclick="window.scrollTo(0,0)">
+      <img src="images/toTop.png" width="36">
+  </div>
+
+
+</html>
